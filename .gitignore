@@ -1,0 +1,8 @@
+content/
+
+data/
+
+pgadmin/sessions/*
+pgadmin/storage/
+pgadmin/azurecredentialcache/
+pgadmin/pgadmin4.db

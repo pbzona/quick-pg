@@ -1,23 +1,28 @@
 services:
   db:
     image: postgres:latest
-    volumes:
-      - ./data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: mydatabase
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
     ports:
       - '5432:5432'
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PGDATA=/data/postgres
+    volumes:
+      - ./data/db:/data/postgres
 
   pgadmin:
     image: dpage/pgadmin4:latest
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - '8080:80'
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=phil
+      - PGADMIN_CONFIG_SERVER_MODE=False
+      - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
     volumes:
       - ./pgadmin:/var/lib/pgadmin
+      - ./servers.json:/pgadmin4/servers.json
+      - ./pgpass:/pgpass
     depends_on:
       - db
